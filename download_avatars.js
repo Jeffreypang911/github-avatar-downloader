@@ -17,6 +17,9 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
   request(options, function(err, res, body) {
     cb(err, JSON.parse(body));
+    if(JSON.parse(body).message == 'Not Found') {
+      console.log("Not Found")
+    }
   });
 }
 
@@ -30,6 +33,7 @@ function downloadImageByURL(url, filePath) {
   })
 
   .on('response', function(response) {
+
 
     console.log('Response Status Code: ' + response.statusCode);
   })
@@ -50,8 +54,10 @@ getRepoContributors(repoOwner, repoName, function(err, result) {
   // console.log("Errors:", err);
   var url = "";
 
-  for (var i=0; i<result.length; i++){
-    url = result[i].avatar_url
-  downloadImageByURL(url, "avatar/" + result[i].login + ".jpg");
-}
+    for (var i = 0; i < result.length; i++){
+      url = result[i].avatar_url
+    downloadImageByURL(url, "avatar/" + result[i].login + ".jpg");
+
+  }
+
 });
