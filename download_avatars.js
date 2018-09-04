@@ -1,6 +1,10 @@
 var request = require('request');
 var secret = require('./secrets.js')
 var fs = require('fs');
+var args = process.argv.slice(2);
+
+repoOwner = process.argv[2]
+repoName = process.argv[3]
 
 function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
@@ -42,9 +46,10 @@ function downloadImageByURL(url, filePath) {
 
 
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+getRepoContributors(repoOwner, repoName, function(err, result) {
   // console.log("Errors:", err);
   var url = "";
+
   for (var i=0; i<result.length; i++){
     url = result[i].avatar_url
   downloadImageByURL(url, "avatar/" + result[i].login + ".jpg");
