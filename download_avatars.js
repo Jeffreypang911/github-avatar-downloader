@@ -1,10 +1,10 @@
 var request = require('request');
-var secret = require('./secrets.js')
+var secret = require('./secrets.js');
 var fs = require('fs');
 var args = process.argv.slice(2);
 
-repoOwner = process.argv[2]
-repoName = process.argv[3]
+repoOwner = process.argv[2];
+repoName = process.argv[3];
 
 function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
@@ -18,7 +18,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
   request(options, function(err, res, body) {
     cb(err, JSON.parse(body));
     if(JSON.parse(body).message == 'Not Found') {
-      console.log("Not Found")
+      console.log("Not Found");
     }
   });
 }
@@ -29,7 +29,7 @@ function downloadImageByURL(url, filePath) {
  request.get(url)
 
   .on('error', function(err) {
-    console.log('error')
+    console.log('error');
   })
 
   .on('response', function(response) {
@@ -39,14 +39,12 @@ function downloadImageByURL(url, filePath) {
   })
 
   .on('end', function(response) {
-    console.log("Downloaded")
+    console.log("Downloaded");
   })
 
-  .pipe(fs.createWriteStream('./' + filePath))
+  .pipe(fs.createWriteStream('./' + filePath));
 
 }
-
-
 
 
 
@@ -55,9 +53,8 @@ getRepoContributors(repoOwner, repoName, function(err, result) {
   var url = "";
 
     for (var i = 0; i < result.length; i++){
-      url = result[i].avatar_url
-    downloadImageByURL(url, "avatar/" + result[i].login + ".jpg");
-
+      url = result[i].avatar_url;
+      downloadImageByURL(url, "avatar/" + result[i].login + ".jpg");
+    }
   }
-
-});
+);
